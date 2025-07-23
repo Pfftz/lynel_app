@@ -1,0 +1,93 @@
+// Sample Product Data for Firebase Firestore
+// 
+// To add these products to your Firestore:
+// 1. Go to the Firebase Console (https://console.firebase.google.com)
+// 2. Select your project: my-flutter-shop-lynel
+// 3. Navigate to Firestore Database
+// 4. Create a new collection called "products"
+// 5. Add documents with the following data:
+
+// Product 1
+/*
+Document ID: product_1 (or auto-generate)
+Fields:
+- name (string): "Wireless Headphones"
+- description (string): "High-quality wireless headphones with noise cancellation"
+- price (number): 89.99
+- imageUrl (string): "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400"
+*/
+
+// Product 2
+/*
+Document ID: product_2 (or auto-generate)
+Fields:
+- name (string): "Smartphone"
+- description (string): "Latest model smartphone with advanced camera"
+- price (number): 699.99
+- imageUrl (string): "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400"
+*/
+
+// Product 3
+/*
+Document ID: product_3 (or auto-generate)
+Fields:
+- name (string): "Laptop"
+- description (string): "Powerful laptop for work and gaming"
+- price (number): 1299.99
+- imageUrl (string): "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400"
+*/
+
+// Product 4
+/*
+Document ID: product_4 (or auto-generate)
+Fields:
+- name (string): "Coffee Mug"
+- description (string): "Ceramic coffee mug with elegant design"
+- price (number): 19.99
+- imageUrl (string): "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400"
+*/
+
+// Product 5
+/*
+Document ID: product_5 (or auto-generate)
+Fields:
+- name (string): "Running Shoes"
+- description (string): "Comfortable running shoes for daily exercise"
+- price (number): 129.99
+- imageUrl (string): "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"
+*/
+
+// Alternative Free Image Sources:
+// 1. Unsplash (https://unsplash.com) - Free high-quality images
+// 2. Pixabay (https://pixabay.com) - Free images and photos
+// 3. Pexels (https://pexels.com) - Free stock photos
+// 
+// To get direct image URLs:
+// 1. Find an image on any of these sites
+// 2. Right-click and select "Copy image address" or "Copy link address"
+// 3. Use that URL as the imageUrl in your Firestore document
+
+// Instructions for adding products via Firestore Console:
+// 1. Open Firebase Console
+// 2. Go to Firestore Database
+// 3. Click "Start collection"
+// 4. Collection ID: "products"
+// 5. Click "Next"
+// 6. Add the first document with the fields above
+// 7. Repeat for each product
+
+// Expected Firestore structure:
+/*
+products (collection)
+├── product_1 (document)
+│   ├── name: "Wireless Headphones"
+│   ├── description: "High-quality wireless headphones..."
+│   ├── price: 89.99
+│   └── imageUrl: "https://images.unsplash.com/..."
+├── product_2 (document)
+│   ├── name: "Smartphone"
+│   ├── description: "Latest model smartphone..."
+│   ├── price: 699.99
+│   └── imageUrl: "https://images.unsplash.com/..."
+└── ... (more products)
+*/
