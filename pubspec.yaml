@@ -38,6 +38,7 @@ dependencies:
     firebase_auth: ^5.7.0
     cloud_firestore: ^5.6.12
     firebase_storage: ^12.4.10
+    google_fonts: ^6.1.0
 
 dev_dependencies:
     flutter_test:
@@ -60,6 +61,9 @@ flutter:
     # the material Icons class.
     uses-material-design: true
 
+
+    assets:
+    - assets/images/mega_mendung.png
     # To add assets to your application, add an assets section, like this:
     # assets:
     #   - images/a_dot_burr.jpeg
