@@ -106,7 +106,7 @@ class ProductsScreen extends StatelessWidget {
           // Product Image
           Expanded(
             flex: 3,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child:
                   product['imageUrl'] != null && product['imageUrl'].isNotEmpty

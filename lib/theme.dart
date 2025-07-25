@@ -9,8 +9,8 @@ const Color terracotta = Color(0xFFD2691E);
 final ThemeData appTheme = ThemeData(
   scaffoldBackgroundColor: jetBlack, // Background → Jet Black
   colorScheme: ColorScheme.fromSeed(
-    seedColor: terracotta,           
-    background: jetBlack,
+    seedColor: terracotta,
+    surface: jetBlack,
     primary: terracotta,
     onPrimary: Colors.white,
     secondary: batikBeige,
@@ -18,16 +18,11 @@ final ThemeData appTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: terracotta,   
+      backgroundColor: terracotta,
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      textStyle: GoogleFonts.poppins(
-        fontWeight: FontWeight.w600,
-        fontSize: 16,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      textStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16),
     ),
   ),
   textButtonTheme: TextButtonThemeData(
@@ -60,14 +55,8 @@ final ThemeData appTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: oldGold, // Heading → Old Gold
     ),
-    bodyMedium: GoogleFonts.poppins(
-      fontSize: 16,
-      color: batikBeige,
-    ),
-    bodySmall: GoogleFonts.poppins(
-      fontSize: 14,
-      color: batikBeige,
-    ),
+    bodyMedium: GoogleFonts.poppins(fontSize: 16, color: batikBeige),
+    bodySmall: GoogleFonts.poppins(fontSize: 14, color: batikBeige),
   ),
   useMaterial3: true,
 );

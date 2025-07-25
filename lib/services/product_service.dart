@@ -66,7 +66,7 @@ class ProductService {
     return _firestore
         .collection(_collection)
         .where('name', isGreaterThanOrEqualTo: searchTerm)
-        .where('name', isLessThan: searchTerm + 'z')
+        .where('name', isLessThan: '${searchTerm}z')
         .snapshots();
   }
 

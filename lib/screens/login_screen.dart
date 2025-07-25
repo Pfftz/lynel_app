@@ -1,30 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'register_page.dart'; 
+import '../services/auth_service.dart';
+import 'signup_screen.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+  bool _isLoading = false;
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
-      final email = emailController.text;
-      final password = passwordController.text;
+      setState(() {
+        _isLoading = true;
+      });
 
-      if (email == 'admin@wastra.com' && password == '123456') {
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Email atau password salah')),
-        );
+      try {
+        final email = emailController.text.trim();
+        final password = passwordController.text;
+
+        await _authService.signIn(email: email, password: password);
+
+        if (mounted) {
+          // Navigation will be handled automatically by AuthWrapper
+          // No need to navigate manually
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: ${e.toString()}')),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
       }
     }
   }
@@ -38,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Image.asset(
               'assets/images/mega_mendung.png',
               fit: BoxFit.cover,
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               colorBlendMode: BlendMode.darken,
             ),
           ),
@@ -47,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(24),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.6),
+                  color: Colors.black.withValues(alpha: 0.6),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 padding: const EdgeInsets.all(24),
@@ -93,15 +112,25 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
-                        onPressed: _login,
-                        child: const Text('Login'),
+                        onPressed: _isLoading ? null : _login,
+                        child: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text('Login'),
                       ),
                       const SizedBox(height: 12),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (_) => const RegisterPage()),
+                            MaterialPageRoute(
+                              builder: (_) => const SignupScreen(),
+                            ),
                           );
                         },
                         child: const Text('Belum punya akun? Daftar'),

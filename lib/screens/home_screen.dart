@@ -293,7 +293,7 @@ class HomeScreen extends StatelessWidget {
           // Product Image
           Expanded(
             flex: 2,
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child:
                   product['imageUrl'] != null && product['imageUrl'].isNotEmpty
