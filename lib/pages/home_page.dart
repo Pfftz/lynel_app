@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/auth_service.dart';
 import 'admin_panel_page.dart';
+import 'theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,56 +11,91 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthService authService = AuthService();
     final user = authService.currentUser;
+    final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text(
-          'WastraNusa',
-          style: TextStyle(
-            color: Colors.brown,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          // Admin Panel Button (only for admin users)
-          if (authService.isAdmin)
-            IconButton(
-              icon: const Icon(Icons.admin_panel_settings,
-                  color: Colors.deepPurple),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AdminPanelPage(),
-                  ),
-                );
-              },
-              tooltip: 'Admin Panel',
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: Stack(
+          children: [
+            // Background warna batikBeige
+            Positioned.fill(
+              child: Container(
+                color: batikBeige,
+              ),
             ),
-          IconButton(
-            icon: const Icon(Icons.logout, color: Colors.brown),
-            onPressed: () async {
-              try {
-                await authService.signOut();
-                if (context.mounted) {
-                  Navigator.pushReplacementNamed(context, '/');
-                }
-              } catch (e) {
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(e.toString()),
-                      backgroundColor: Colors.red,
+
+            // Overlay gambar dengan opacity 0.2
+            Positioned.fill(
+              child: Opacity(
+                opacity: 0.2,
+                child: Image.asset(
+                  'lib/assets/mega_mendung.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+
+            // Konten header
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'WN',
+                      style: TextStyle(
+                        color: oldGold,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        fontFamily: Theme.of(context).textTheme.headlineLarge?.fontFamily,
+                        letterSpacing: 1,
+                      ),
                     ),
-                  );
-                }
-              }
-            },
-          ),
-        ],
+                    Row(
+                      children: [
+                        if (authService.isAdmin)
+                          IconButton(
+                            icon: Icon(Icons.admin_panel_settings, color: oldGold),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const AdminPanelPage()),
+                              );
+                            },
+                            tooltip: 'Admin Panel',
+                          ),
+                        IconButton(
+                          icon: Icon(Icons.logout, color: oldGold),
+                          onPressed: () async {
+                            try {
+                              await authService.signOut();
+                              if (context.mounted) {
+                                Navigator.pushReplacementNamed(context, '/');
+                              }
+                            } catch (e) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(e.toString()),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          tooltip: 'Logout',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -70,11 +106,11 @@ class HomePage extends StatelessWidget {
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: theme.colorScheme.secondary,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.brown.withValues(alpha: 0.1),
+                    color: theme.colorScheme.primary.withOpacity(0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -83,18 +119,18 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Selamat Datang!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.brown,
+                    style: theme.textTheme.headlineLarge?.copyWith(
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Email: ${user?.email ?? 'Unknown'}',
-                    style: const TextStyle(fontSize: 16, color: Colors.brown),
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                 ],
               ),
@@ -113,12 +149,15 @@ class HomePage extends StatelessWidget {
               ),
             ),
 
-            // Kategori with Firebase data
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            // Kategori
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'Kategori',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             SizedBox(
@@ -131,7 +170,7 @@ class HomePage extends StatelessWidget {
                     'Kain',
                     'Outer',
                     'Dress'
-                  ]; // Default categories
+                  ];
 
                   if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                     categories = snapshot.data!.toList();
@@ -142,7 +181,7 @@ class HomePage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     children: categories
                         .map((category) =>
-                            _categoryTile(category, _getCategoryIcon(category)))
+                            _categoryTile(category, _getCategoryIcon(category), theme))
                         .toList(),
                   );
                 },
@@ -151,12 +190,15 @@ class HomePage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // Produk Unggulan (Firebase)
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+            // Produk Unggulan
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'Produk Unggulan',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             SizedBox(
@@ -177,7 +219,6 @@ class HomePage extends StatelessWidget {
                   }
 
                   if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                    // Fallback to all products if no featured products
                     return StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('products')
@@ -192,46 +233,21 @@ class HomePage extends StatelessWidget {
 
                         if (!fallbackSnapshot.hasData ||
                             fallbackSnapshot.data!.docs.isEmpty) {
-                          return const Center(
-                              child: Text('Tidak ada produk tersedia'));
+                          return Center(
+                              child: Text(
+                            'Tidak ada produk tersedia',
+                            style: theme.textTheme.bodyMedium,
+                          ));
                         }
 
                         final products = fallbackSnapshot.data!.docs;
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.only(left: 16, right: 8),
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            final product =
-                                products[index].data() as Map<String, dynamic>;
-                            return Container(
-                              width: 160,
-                              margin: const EdgeInsets.only(right: 12),
-                              child: _buildProductCard(
-                                  context, product, products[index].id),
-                            );
-                          },
-                        );
+                        return _buildProductList(context, products);
                       },
                     );
                   }
 
                   final products = snapshot.data!.docs;
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(left: 16, right: 8),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      final product =
-                          products[index].data() as Map<String, dynamic>;
-                      return Container(
-                        width: 160,
-                        margin: const EdgeInsets.only(right: 12),
-                        child: _buildProductCard(
-                            context, product, products[index].id),
-                      );
-                    },
-                  );
+                  return _buildProductList(context, products);
                 },
               ),
             ),
@@ -242,19 +258,39 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  static Widget _categoryTile(String label, IconData icon) {
+  static Widget _buildProductList(
+      BuildContext context, List<QueryDocumentSnapshot> products) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.only(left: 16, right: 8),
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        final product = products[index].data() as Map<String, dynamic>;
+        return Container(
+          width: 160,
+          margin: const EdgeInsets.only(right: 12),
+          child: _buildProductCard(context, product, products[index].id),
+        );
+      },
+    );
+  }
+
+  static Widget _categoryTile(String label, IconData icon, ThemeData theme) {
     return Container(
       margin: const EdgeInsets.only(right: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.brown.shade100,
+        color: theme.colorScheme.secondary.withOpacity(0.4),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.brown),
+          Icon(icon, color: theme.colorScheme.primary),
           const SizedBox(height: 4),
-          Text(label, style: const TextStyle(fontSize: 12)),
+          Text(
+            label,
+            style: theme.textTheme.bodySmall,
+          ),
         ],
       ),
     );
@@ -262,6 +298,7 @@ class HomePage extends StatelessWidget {
 
   static Widget _buildProductCard(
       BuildContext context, Map<String, dynamic> product, String productId) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/detail', arguments: {
@@ -326,7 +363,9 @@ class HomePage extends StatelessWidget {
                   children: [
                     Text(
                       product['name'] ?? 'Produk Batik',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -334,7 +373,9 @@ class HomePage extends StatelessWidget {
                     Text(
                       _formatCurrency(
                           product['price'] ?? 0, product['currency'] ?? 'IDR'),
-                      style: const TextStyle(color: Colors.brown),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.primary,
+                      ),
                     ),
                   ],
                 ),
@@ -354,7 +395,6 @@ class HomePage extends StatelessWidget {
     }
   }
 
-  // Get categories from Firebase products
   static Future<Set<String>> _getCategories() async {
     try {
       final snapshot =
@@ -369,14 +409,12 @@ class HomePage extends StatelessWidget {
         }
       }
 
-      // Add default categories if none found
       if (categories.isEmpty) {
         categories.addAll(['Kemeja', 'Kain', 'Outer', 'Dress']);
       }
 
       return categories;
     } catch (e) {
-      // Return default categories on error
       return {'Kemeja', 'Kain', 'Outer', 'Dress'};
     }
   }
