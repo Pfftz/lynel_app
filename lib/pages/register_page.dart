@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -18,26 +18,34 @@ class _SignupScreenState extends State<SignupScreen> {
   final AuthService _authService = AuthService();
   bool _isLoading = false;
 
-  void _signup() async {
+  void _register() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
       try {
-        final email = emailController.text.trim();
-        final password = passwordController.text;
+        final user = await _authService.signUp(
+          email: emailController.text.trim(),
+          password: passwordController.text,
+        );
 
-        await _authService.signUp(email: email, password: password);
-
-        if (mounted) {
-          // Navigation will be handled automatically by AuthWrapper
+        if (user != null && mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Pendaftaran berhasil! Silakan login.'),
+              backgroundColor: Colors.green,
+            ),
+          );
           Navigator.pop(context);
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Registration failed: ${e.toString()}')),
+            SnackBar(
+              content: Text(e.toString()),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       } finally {
@@ -58,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
           // Background Mega Mendung PNG
           Positioned.fill(
             child: Image.asset(
-              'assets/images/mega_mendung.png',
+              'lib/assets/mega_mendung.png',
               fit: BoxFit.cover,
               color: Colors.black.withValues(alpha: 0.3),
               colorBlendMode: BlendMode.darken,
@@ -68,14 +76,14 @@ class _SignupScreenState extends State<SignupScreen> {
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(24.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.6),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                padding: const EdgeInsets.all(24),
-                child: Form(
-                  key: _formKey,
+              child: Form(
+                key: _formKey,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -142,30 +150,30 @@ class _SignupScreenState extends State<SignupScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Konfirmasi password wajib diisi';
                           } else if (value != passwordController.text) {
-                            return 'Password tidak sama';
+                            return 'Password tidak cocok';
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
-                        onPressed: _isLoading ? null : _signup,
+                        onPressed: _isLoading ? null : _register,
                         child: _isLoading
                             ? const SizedBox(
                                 width: 20,
                                 height: 20,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
                                 ),
                               )
                             : const Text('Daftar'),
                       ),
                       const SizedBox(height: 12),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pop(context); // kembali ke login
-                        },
-                        child: const Text('Sudah punya akun? Masuk'),
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Sudah punya akun? Login'),
                       ),
                     ],
                   ),
@@ -176,5 +184,14 @@ class _SignupScreenState extends State<SignupScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
   }
 }

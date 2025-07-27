@@ -1,6 +1,0 @@
-Future Enhancements:
-User Management: Admin can manage user accounts
-Order System: Full order management
-Analytics: Sales reports and insights
-Inventory: Stock levels and alerts
-Bulk Operations: Import/export products

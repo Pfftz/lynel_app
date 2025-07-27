@@ -21,8 +21,13 @@ final ThemeData appTheme = ThemeData(
       backgroundColor: terracotta,
       foregroundColor: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      textStyle: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      textStyle: GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+      ),
     ),
   ),
   textButtonTheme: TextButtonThemeData(
@@ -55,8 +60,14 @@ final ThemeData appTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: oldGold, // Heading → Old Gold
     ),
-    bodyMedium: GoogleFonts.poppins(fontSize: 16, color: batikBeige),
-    bodySmall: GoogleFonts.poppins(fontSize: 14, color: batikBeige),
+    bodyMedium: GoogleFonts.poppins(
+      fontSize: 16,
+      color: batikBeige,
+    ),
+    bodySmall: GoogleFonts.poppins(
+      fontSize: 14,
+      color: batikBeige,
+    ),
   ),
   useMaterial3: true,
 );

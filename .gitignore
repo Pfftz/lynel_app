@@ -33,13 +33,6 @@ migrate_working_dir/
 .pub/
 /build/
 
-# Firebase configuration (SECURITY - Don't commit these!)
-lib/firebase_options.dart
-android/app/google-services.json
-ios/Runner/GoogleService-Info.plist
-.firebaserc
-firebase.json
-
 # Symbolication related
 app.*.symbols
 

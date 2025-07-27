@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'register_page.dart';
 import '../services/auth_service.dart';
-import 'signup_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -23,19 +23,21 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       try {
-        final email = emailController.text.trim();
-        final password = passwordController.text;
+        final user = await _authService.signIn(
+          email: emailController.text.trim(),
+          password: passwordController.text,
+        );
 
-        await _authService.signIn(email: email, password: password);
-
-        if (mounted) {
-          // Navigation will be handled automatically by AuthWrapper
-          // No need to navigate manually
+        if (user != null && mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Login failed: ${e.toString()}')),
+            SnackBar(
+              content: Text(e.toString()),
+              backgroundColor: Colors.red,
+            ),
           );
         }
       } finally {
@@ -55,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/mega_mendung.png',
+              'lib/assets/mega_mendung.png',
               fit: BoxFit.cover,
               color: Colors.black.withValues(alpha: 0.3),
               colorBlendMode: BlendMode.darken,
@@ -119,6 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height: 20,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
                                 ),
                               )
                             : const Text('Login'),
@@ -129,8 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const SignupScreen(),
-                            ),
+                                builder: (_) => const RegisterPage()),
                           );
                         },
                         child: const Text('Belum punya akun? Daftar'),

@@ -6,6 +6,7 @@ class AuthService {
   // Admin email list (you can move this to Firestore later)
   static const List<String> _adminEmails = [
     'admin@example.com',
+    'admin@wastra.com', // Test admin from login page
     'bedungsigma@example.com', // Add your email here
   ];
 
