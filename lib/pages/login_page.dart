@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'register_page.dart';
 import '../services/auth_service.dart';
+import '../pages/theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -53,14 +54,34 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: nusantaraBeige,
       body: Stack(
         children: [
+          // Background gradient
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    earthBrown.withOpacity(0.1),
+                    goldenAmber.withOpacity(0.1),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Background pattern
           Positioned.fill(
             child: Image.asset(
-              'lib/assets/mega_mendung.png',
+              'assets/images/mega_mendung.png',
               fit: BoxFit.cover,
-              color: Colors.black.withValues(alpha: 0.3),
-              colorBlendMode: BlendMode.darken,
+              color: earthBrown.withOpacity(0.1),
+              colorBlendMode: BlendMode.multiply,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(); // Empty container if image fails
+              },
             ),
           ),
           Center(
@@ -68,10 +89,17 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(24),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.6),
-                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: earthBrown.withOpacity(0.2),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(32),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -79,9 +107,18 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Text(
                         'WastraNusa',
-                        style: Theme.of(context).textTheme.headlineLarge,
+                        style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: earthBrown,
+                        ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Batik & Tekstil Nusantara',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: deepTeak,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
                       TextFormField(
                         controller: emailController,
                         decoration: const InputDecoration(

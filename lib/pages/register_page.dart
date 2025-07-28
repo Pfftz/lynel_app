@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
           // Background Mega Mendung PNG
           Positioned.fill(
             child: Image.asset(
-              'lib/assets/mega_mendung.png',
+              'assets/images/mega_mendung.png',
               fit: BoxFit.cover,
               color: Colors.black.withValues(alpha: 0.3),
               colorBlendMode: BlendMode.darken,

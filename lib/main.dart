@@ -14,6 +14,8 @@ import 'pages/checkout_page.dart';
 import 'pages/konfirmasi_pembayaran_page.dart';
 import 'pages/register_page.dart';
 import 'pages/admin_panel_page.dart';
+import 'pages/product_list_page.dart';
+import 'pages/image_debug_page.dart';
 
 // Import screens untuk fallback atau admin
 // import 'screens/home_screen.dart';
@@ -58,6 +60,15 @@ class WatraNusaApp extends StatelessWidget {
         },
         '/konfirmasi': (context) => const KonfirmasiPembayaranPage(),
         '/admin': (context) => const AdminPanelPage(),
+        '/products': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          return ProductListPage(
+            category: args?['category'],
+            title: args?['title'] ?? 'Produk',
+            sortBy: args?['sortBy'],
+          );
+        },
+        '/debug': (context) => const ImageDebugPage(),
       },
     );
   }

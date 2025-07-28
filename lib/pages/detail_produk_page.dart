@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../utils/image_url_helper.dart';
+import '../services/cart_service.dart';
+import '../pages/theme.dart';
 
 class DetailProdukPage extends StatefulWidget {
   const DetailProdukPage({super.key});
@@ -65,11 +68,11 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: nusantaraBeige,
       appBar: AppBar(
         title: const Text('Detail Produk'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.brown,
+        backgroundColor: earthBrown,
+        foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -92,7 +95,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
               child: product!['imageUrl'] != null &&
                       product!['imageUrl'].isNotEmpty
                   ? Image.network(
-                      product!['imageUrl'],
+                      ImageUrlHelper.getDirectImageUrl(product!['imageUrl']) ?? product!['imageUrl'],
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -106,23 +109,32 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                         );
                       },
                       errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey.shade200,
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.image_not_supported,
-                                size: 64,
-                                color: Colors.grey,
+                        print('Image loading error: $error');
+                        print('Original URL: ${product!['imageUrl']}');
+                        print('Converted URL: ${ImageUrlHelper.getDirectImageUrl(product!['imageUrl'])}');
+                        return Image.asset(
+                          'lib/assets/sample_batik.jpg',
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey.shade200,
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.image_not_supported,
+                                    size: 64,
+                                    color: Colors.grey,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Gambar tidak dapat dimuat',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Gambar tidak dapat dimuat',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         );
                       },
                     )
@@ -161,7 +173,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                   Text(
                     _formatCurrency(
                         product!['price'] ?? 0, product!['currency'] ?? 'IDR'),
-                    style: const TextStyle(fontSize: 18, color: Colors.brown),
+                    style: const TextStyle(fontSize: 18, color: earthBrown),
                   ),
                   const SizedBox(height: 16),
 
@@ -331,7 +343,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: (product!['stock'] ?? 0) > 0
-                                ? Colors.brown
+                                ? earthBrown
                                 : Colors.grey,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -349,7 +361,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
                         child: ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: (product!['stock'] ?? 0) > 0
-                                ? Colors.orange
+                                ? goldenAmber
                                 : Colors.grey,
                             foregroundColor: Colors.white,
                             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -478,7 +490,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
     );
   }
 
-  void _addToCart() {
+  void _addToCart() async {
     // Validate selections
     if (product!['colors'] != null &&
         (product!['colors'] as List).isNotEmpty &&
@@ -530,24 +542,61 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
       'origin': product!['origin'],
     };
 
-    // For now, just show success message
-    // In a real app, you'd save this to local storage or a cart service
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Produk berhasil ditambahkan ke keranjang!'),
-        backgroundColor: Colors.green,
-      ),
-    );
+    try {
+      // Add item to cart using CartService
+      await CartService.instance.addItem(cartItem);
+      
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Produk berhasil ditambahkan ke keranjang!'),
+            backgroundColor: Colors.green,
+          ),
+        );
 
-    // Navigate to cart page with the item
-    Navigator.pushNamed(
-      context,
-      '/cart',
-      arguments: [cartItem],
-    );
+        // Show option to continue shopping or go to cart
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Berhasil!'),
+              content: const Text('Produk telah ditambahkan ke keranjang. Apa yang ingin Anda lakukan selanjutnya?'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Lanjut Belanja'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.pushNamed(context, '/cart');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: earthBrown,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Lihat Keranjang'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
-  void _buyNow() {
+  void _buyNow() async {
     // Validate selections first
     if (product!['colors'] != null &&
         (product!['colors'] as List).isNotEmpty &&
@@ -599,7 +648,7 @@ class _DetailProdukPageState extends State<DetailProdukPage> {
       'origin': product!['origin'],
     };
 
-    // Navigate directly to checkout
+    // Navigate directly to checkout with single item
     Navigator.pushNamed(
       context,
       '/checkout',
