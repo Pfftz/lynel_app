@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../services/auth_service.dart';
 import '../services/database_seeder.dart';
+import '../pages/theme.dart';
+import '../utils/image_url_helper.dart';
 
 class AdminPanelPage extends StatefulWidget {
   const AdminPanelPage({super.key});
@@ -32,39 +34,20 @@ class _AdminPanelPageState extends State<AdminPanelPage> {
       );
     }
 
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        backgroundColor: const Color(0xFFFDFBF7),
-        appBar: AppBar(
-          title: const Text(
-            'Admin Panel',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          bottom: const TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(icon: Icon(Icons.shopping_bag), text: 'Produk'),
-              Tab(icon: Icon(Icons.people), text: 'Pengguna'),
-              Tab(icon: Icon(Icons.receipt), text: 'Pesanan'),
-            ],
+    return Scaffold(
+      backgroundColor: nusantaraBeige,
+      appBar: AppBar(
+        title: const Text(
+          'Admin Panel - Manajemen Produk',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        body: const TabBarView(
-          children: [
-            ProductsAdminTab(),
-            UsersAdminTab(),
-            OrdersAdminTab(),
-          ],
-        ),
+        backgroundColor: earthBrown,
+        foregroundColor: Colors.white,
       ),
+      body: const ProductsAdminTab(),
     );
   }
 }
@@ -83,10 +66,10 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFDFBF7),
+      backgroundColor: nusantaraBeige,
       appBar: AppBar(
         title: const Text('Manajemen Produk'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: earthBrown,
         foregroundColor: Colors.white,
         automaticallyImplyLeading: false,
         actions: [
@@ -104,7 +87,7 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
                 value: 'populate',
                 child: Row(
                   children: [
-                    Icon(Icons.auto_awesome, color: Colors.deepPurple),
+                    Icon(Icons.auto_awesome, color: earthBrown),
                     SizedBox(width: 8),
                     Text('Tambah Sample Data'),
                   ],
@@ -156,7 +139,7 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
                     icon: const Icon(Icons.auto_awesome),
                     label: const Text('Tambah Sample Products'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      backgroundColor: earthBrown,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 12),
@@ -168,8 +151,8 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
                     icon: const Icon(Icons.add),
                     label: const Text('Tambah Manual'),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.deepPurple,
-                      side: const BorderSide(color: Colors.deepPurple),
+                      foregroundColor: earthBrown,
+                      side: const BorderSide(color: earthBrown),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 24, vertical: 12),
                     ),
@@ -198,14 +181,50 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
                       width: 60,
                       height: 60,
                       child: product['imageUrl'] != null &&
-                              product['imageUrl'].isNotEmpty
-                          ? Image.network(
-                              product['imageUrl'],
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  child: const Icon(Icons.image_not_supported),
+                              product['imageUrl'].toString().isNotEmpty
+                          ? Builder(
+                              builder: (context) {
+                                final rawImageUrl = product['imageUrl'].toString();
+                                final imageUrl = ImageUrlHelper.getDirectImageUrl(rawImageUrl);
+                                
+                                if (imageUrl == null || imageUrl.isEmpty) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    child: const Icon(Icons.image),
+                                  );
+                                }
+                                
+                                return Image.network(
+                                  imageUrl,
+                                  fit: BoxFit.cover,
+                                  headers: const {
+                                    'User-Agent': 'Mozilla/5.0 (compatible; Flutter app)',
+                                  },
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Container(
+                                      color: Colors.grey[300],
+                                      child: const Center(
+                                        child: CircularProgressIndicator(strokeWidth: 2),
+                                      ),
+                                    );
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    print('Admin panel image error: $error');
+                                    print('Image URL: $imageUrl');
+                                    
+                                    // Try fallback to asset image
+                                    return Image.asset(
+                                      'assets/images/sample_batik.jpg',
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return Container(
+                                          color: Colors.grey[300],
+                                          child: const Icon(Icons.image_not_supported),
+                                        );
+                                      },
+                                    );
+                                  },
                                 );
                               },
                             )
@@ -272,7 +291,7 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addProduct,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: earthBrown,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -307,7 +326,7 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: earthBrown,
               foregroundColor: Colors.white,
             ),
             child: const Text('Ya, Tambahkan'),
@@ -592,9 +611,72 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
                     controller: imageUrlController,
                     decoration: const InputDecoration(
                       labelText: 'URL Gambar',
+                      helperText: 'Gunakan URL dari Unsplash, Imgur, atau Firebase Storage',
+                      helperMaxLines: 2,
                       border: OutlineInputBorder(),
                     ),
+                    onChanged: (value) {
+                      // Validate image URL as user types
+                      if (value.isNotEmpty && !ImageUrlHelper.isValidImageUrl(value)) {
+                        // Could show validation message here if needed
+                      }
+                    },
                   ),
+                  // Show image preview if URL is provided
+                  if (imageUrlController.text.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: SizedBox(
+                        height: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Builder(
+                            builder: (context) {
+                              final previewUrl = ImageUrlHelper.getDirectImageUrl(imageUrlController.text);
+                              if (previewUrl == null || previewUrl.isEmpty) {
+                                return Container(
+                                  color: Colors.grey[300],
+                                  child: const Center(
+                                    child: Text('URL gambar tidak valid'),
+                                  ),
+                                );
+                              }
+                              
+                              return Image.network(
+                                previewUrl,
+                                fit: BoxFit.cover,
+                                headers: const {
+                                  'User-Agent': 'Mozilla/5.0 (compatible; Flutter app)',
+                                },
+                                loadingBuilder: (context, child, loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    child: const Center(
+                                      child: CircularProgressIndicator(strokeWidth: 2),
+                                    ),
+                                  );
+                                },
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey[300],
+                                    child: const Center(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.error, color: Colors.red),
+                                          Text('Gagal memuat gambar', style: TextStyle(fontSize: 12)),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
                   const SizedBox(height: 16),
                   CheckboxListTile(
                     title: const Text('Produk Unggulan'),
@@ -696,38 +778,6 @@ class _ProductsAdminTabState extends State<ProductsAdminTab> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Users Admin Tab
-class UsersAdminTab extends StatelessWidget {
-  const UsersAdminTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Manajemen Pengguna\n(Coming Soon)',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18),
-      ),
-    );
-  }
-}
-
-// Orders Admin Tab
-class OrdersAdminTab extends StatelessWidget {
-  const OrdersAdminTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Manajemen Pesanan\n(Coming Soon)',
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 18),
       ),
     );
   }
