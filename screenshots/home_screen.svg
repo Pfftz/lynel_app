@@ -1,0 +1,55 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="600" fill="#FDF7F0"/>
+  
+  <!-- Header -->
+  <rect width="300" height="80" fill="#8B4513"/>
+  <text x="150" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Lynel App</text>
+  
+  <!-- Search bar -->
+  <rect x="20" y="100" width="260" height="40" fill="white" stroke="#D4A574" stroke-width="1" rx="20"/>
+  <text x="150" y="125" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="14">Search batik products...</text>
+  
+  <!-- Featured Products Header -->
+  <text x="20" y="175" fill="#8B4513" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Featured Batik</text>
+  
+  <!-- Product Grid -->
+  <rect x="20" y="190" width="125" height="150" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="30" y="200" width="105" height="80" fill="#E6B800" rx="4"/>
+  <text x="82" y="240" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Batik Image</text>
+  <text x="82" y="295" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Mega Mendung</text>
+  <text x="82" y="315" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="11">Rp 250.000</text>
+  
+  <rect x="155" y="190" width="125" height="150" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="165" y="200" width="105" height="80" fill="#2E4A62" rx="4"/>
+  <text x="217" y="240" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Batik Image</text>
+  <text x="217" y="295" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Parang Rusak</text>
+  <text x="217" y="315" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="11">Rp 180.000</text>
+  
+  <rect x="20" y="360" width="125" height="150" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="30" y="370" width="105" height="80" fill="#800020" rx="4"/>
+  <text x="82" y="410" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Batik Image</text>
+  <text x="82" y="465" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Kawung</text>
+  <text x="82" y="485" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="11">Rp 320.000</text>
+  
+  <rect x="155" y="360" width="125" height="150" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="165" y="370" width="105" height="80" fill="#D4A574" rx="4"/>
+  <text x="217" y="410" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">Batik Image</text>
+  <text x="217" y="465" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Sido Mukti</text>
+  <text x="217" y="485" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="11">Rp 275.000</text>
+  
+  <!-- Bottom Navigation -->
+  <rect x="0" y="540" width="300" height="60" fill="white" stroke="#D4A574" stroke-width="1"/>
+  <circle cx="60" cy="570" r="15" fill="#8B4513"/>
+  <text x="60" y="575" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">🏠</text>
+  
+  <circle cx="150" cy="570" r="15" fill="#D4A574"/>
+  <text x="150" y="575" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">📦</text>
+  
+  <circle cx="240" cy="570" r="15" fill="#D4A574"/>
+  <text x="240" y="575" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">🛒</text>
+  
+  <!-- Cart badge -->
+  <circle cx="250" cy="560" r="8" fill="#800020"/>
+  <text x="250" y="565" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10">3</text>
+</svg>

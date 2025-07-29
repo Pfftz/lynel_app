@@ -1,0 +1,76 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="600" fill="#FDF7F0"/>
+  
+  <!-- Header -->
+  <rect width="300" height="80" fill="#8B4513"/>
+  <text x="40" y="45" fill="white" font-family="Arial, sans-serif" font-size="16">← Back</text>
+  <text x="150" y="45" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Shopping Cart</text>
+  
+  <!-- Cart Items -->
+  <text x="20" y="115" fill="#8B4513" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Your Items (3)</text>
+  
+  <!-- Item 1 -->
+  <rect x="20" y="130" width="260" height="80" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="30" y="140" width="50" height="60" fill="#2E4A62" rx="4"/>
+  <text x="55" y="170" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">Batik</text>
+  
+  <text x="90" y="155" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Kemeja Mega Mendung</text>
+  <text x="90" y="170" fill="#654321" font-family="Arial, sans-serif" font-size="10">Size: L, Color: Brown</text>
+  <text x="90" y="185" fill="#800020" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Rp 250.000</text>
+  
+  <rect x="230" y="155" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="240" y="169" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">-</text>
+  <text x="255" y="169" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12">1</text>
+  <rect x="265" y="155" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="275" y="169" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">+</text>
+  
+  <!-- Item 2 -->
+  <rect x="20" y="220" width="260" height="80" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="30" y="230" width="50" height="60" fill="#800020" rx="4"/>
+  <text x="55" y="260" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">Batik</text>
+  
+  <text x="90" y="245" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Batik Kawung</text>
+  <text x="90" y="260" fill="#654321" font-family="Arial, sans-serif" font-size="10">Size: M, Color: Maroon</text>
+  <text x="90" y="275" fill="#800020" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Rp 320.000</text>
+  
+  <rect x="230" y="245" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="240" y="259" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">-</text>
+  <text x="255" y="259" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12">2</text>
+  <rect x="265" y="245" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="275" y="259" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">+</text>
+  
+  <!-- Item 3 -->
+  <rect x="20" y="310" width="260" height="80" fill="white" stroke="#D4A574" stroke-width="1" rx="8"/>
+  <rect x="30" y="320" width="50" height="60" fill="#E6B800" rx="4"/>
+  <text x="55" y="350" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="8">Batik</text>
+  
+  <text x="90" y="335" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Sido Mukti Dress</text>
+  <text x="90" y="350" fill="#654321" font-family="Arial, sans-serif" font-size="10">Size: L, Color: Gold</text>
+  <text x="90" y="365" fill="#800020" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Rp 275.000</text>
+  
+  <rect x="230" y="335" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="240" y="349" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">-</text>
+  <text x="255" y="349" text-anchor="middle" fill="#8B4513" font-family="Arial, sans-serif" font-size="12">1</text>
+  <rect x="265" y="335" width="20" height="20" fill="#D4A574" rx="10"/>
+  <text x="275" y="349" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">+</text>
+  
+  <!-- Total Section -->
+  <line x1="20" y1="420" x2="280" y2="420" stroke="#D4A574" stroke-width="1"/>
+  
+  <text x="20" y="445" fill="#8B4513" font-family="Arial, sans-serif" font-size="14">Subtotal:</text>
+  <text x="280" y="445" text-anchor="end" fill="#8B4513" font-family="Arial, sans-serif" font-size="14">Rp 1.165.000</text>
+  
+  <text x="20" y="465" fill="#8B4513" font-family="Arial, sans-serif" font-size="14">Shipping:</text>
+  <text x="280" y="465" text-anchor="end" fill="#8B4513" font-family="Arial, sans-serif" font-size="14">Rp 25.000</text>
+  
+  <text x="20" y="490" fill="#8B4513" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Total:</text>
+  <text x="280" y="490" text-anchor="end" fill="#800020" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Rp 1.190.000</text>
+  
+  <!-- Checkout Button -->
+  <rect x="20" y="520" width="260" height="40" fill="#8B4513" rx="20"/>
+  <text x="150" y="545" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Proceed to Checkout</text>
+  
+  <!-- Continue Shopping -->
+  <text x="150" y="580" text-anchor="middle" fill="#D4A574" font-family="Arial, sans-serif" font-size="14" text-decoration="underline">Continue Shopping</text>
+</svg>

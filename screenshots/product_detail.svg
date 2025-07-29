@@ -1,0 +1,47 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="600" fill="#FDF7F0"/>
+  
+  <!-- Header -->
+  <rect width="300" height="80" fill="#8B4513"/>
+  <text x="40" y="45" fill="white" font-family="Arial, sans-serif" font-size="16">← Back</text>
+  <text x="260" y="45" text-anchor="end" fill="white" font-family="Arial, sans-serif" font-size="16">🛒</text>
+  
+  <!-- Product Image -->
+  <rect x="20" y="100" width="260" height="200" fill="#2E4A62" stroke="#D4A574" stroke-width="2" rx="8"/>
+  <text x="150" y="190" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14">Kemeja Batik</text>
+  <text x="150" y="210" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14">Mega Mendung</text>
+  
+  <!-- Product Info -->
+  <text x="20" y="335" fill="#8B4513" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Kemeja Batik Mega Mendung</text>
+  <text x="20" y="355" fill="#800020" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Rp 250.000</text>
+  
+  <!-- Description -->
+  <text x="20" y="385" fill="#654321" font-family="Arial, sans-serif" font-size="12">Kemeja batik dengan motif mega mendung khas</text>
+  <text x="20" y="400" fill="#654321" font-family="Arial, sans-serif" font-size="12">Cirebon. Terbuat dari katun premium dengan</text>
+  <text x="20" y="415" fill="#654321" font-family="Arial, sans-serif" font-size="12">kualitas tinggi dan nyaman digunakan.</text>
+  
+  <!-- Origin & Material -->
+  <text x="20" y="445" fill="#8B4513" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Origin: Cirebon • Material: Katun Premium</text>
+  
+  <!-- Color Selection -->
+  <text x="20" y="475" fill="#8B4513" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Colors:</text>
+  <circle cx="80" cy="485" r="12" fill="#8B4513" stroke="#D4A574" stroke-width="2"/>
+  <circle cx="110" cy="485" r="12" fill="#000000" stroke="#D4A574" stroke-width="1"/>
+  <circle cx="140" cy="485" r="12" fill="#2E4A62" stroke="#D4A574" stroke-width="1"/>
+  
+  <!-- Size Selection -->
+  <text x="20" y="520" fill="#8B4513" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Sizes:</text>
+  <rect x="70" y="505" width="30" height="25" fill="white" stroke="#D4A574" stroke-width="1" rx="4"/>
+  <text x="85" y="522" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="12">M</text>
+  
+  <rect x="110" y="505" width="30" height="25" fill="#8B4513" stroke="#8B4513" stroke-width="1" rx="4"/>
+  <text x="125" y="522" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">L</text>
+  
+  <rect x="150" y="505" width="30" height="25" fill="white" stroke="#D4A574" stroke-width="1" rx="4"/>
+  <text x="165" y="522" text-anchor="middle" fill="#654321" font-family="Arial, sans-serif" font-size="12">XL</text>
+  
+  <!-- Add to Cart Button -->
+  <rect x="20" y="550" width="260" height="40" fill="#8B4513" rx="20"/>
+  <text x="150" y="575" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Add to Cart</text>
+</svg>
