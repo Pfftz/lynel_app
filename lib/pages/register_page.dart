@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../pages/theme.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -68,8 +69,11 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Image.asset(
               'assets/images/mega_mendung.png',
               fit: BoxFit.cover,
-              color: Colors.black.withValues(alpha: 0.3),
-              colorBlendMode: BlendMode.darken,
+              color: earthBrown.withOpacity(0.2),
+              colorBlendMode: BlendMode.multiply,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(); // Empty container if image fails
+              },
             ),
           ),
           // Form Registrasi
@@ -80,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.6),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(24),
