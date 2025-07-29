@@ -25,9 +25,7 @@ import 'pages/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const WatraNusaApp());
 }
 
@@ -49,26 +47,29 @@ class WatraNusaApp extends StatelessWidget {
         //     const HomeScreen(), // Fallback to screens version
         '/detail': (context) => const DetailProdukPage(),
         '/cart': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments
-              as List<Map<String, dynamic>>?;
+          final args =
+              ModalRoute.of(context)?.settings.arguments
+                  as List<Map<String, dynamic>>?;
           return CartPage(cartItems: args);
         },
         '/checkout': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments
-              as List<Map<String, dynamic>>?;
+          final args =
+              ModalRoute.of(context)?.settings.arguments
+                  as List<Map<String, dynamic>>?;
           return CheckoutPage(cartItems: args ?? []);
         },
         '/konfirmasi': (context) => const KonfirmasiPembayaranPage(),
         '/admin': (context) => const AdminPanelPage(),
         '/products': (context) {
-          final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+          final args =
+              ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>?;
           return ProductListPage(
             category: args?['category'],
             title: args?['title'] ?? 'Produk',
             sortBy: args?['sortBy'],
           );
         },
-        '/debug': (context) => const ImageDebugPage(),
       },
     );
   }
@@ -86,9 +87,7 @@ class AuthWrapper extends StatelessWidget {
         // Show loading while checking auth state
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
+            body: Center(child: CircularProgressIndicator()),
           );
         }
 
